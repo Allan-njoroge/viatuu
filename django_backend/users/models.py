@@ -8,9 +8,6 @@ class User(AbstractUser):
         ('customer', 'Customer')
     ]
     
-    # email = models.EmailField(unique=True)
-    # first_name = models.CharField(max_length=50)
-    # last_name = models.CharField(max_length=50)
     role = models.CharField(max_length=10, choices=ROLES, default='customer')
     profile_picture = models.ImageField(upload_to='profile_pictures', null=True, blank=True)
     username = None
@@ -21,12 +18,8 @@ class User(AbstractUser):
     
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['role']
-    
-    # def save(self, *args, **kwargs):
-    #     if self.password:
-    #         self.set_password(self.password)
-    #     super().save(*args, **kwargs)
-    
+
+
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
     
