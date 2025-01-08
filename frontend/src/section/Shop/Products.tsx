@@ -12,10 +12,13 @@ const Products = () => {
         { name: "Nike Low Dunk", price: 20, category: "Kids" },
         { name: "Air Force", price: 20, category: "Kids" },
         { name: "Nike Air Max Plus SE", price: 20, category: "Kids" },
+        { name: "Nike Low Dunk", price: 20, category: "Kids" },
+        { name: "Air Force", price: 20, category: "Kids" },
+        { name: "Nike Air Max Plus SE", price: 20, category: "Kids" },
       ];
 
   return (
-    <div className="py-10 md:py-14 px-2 md:px-6 w-full grid grid-cols-2 md:grid-cols-3 gap-10 mt-10">
+    <div className="py-10 md:py-14 px-2 md:px-6 w-full grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 mt-10">
         {productDetails.map((item, index) => (
           <>
             <ProductCard
