@@ -18,7 +18,7 @@ const Categories = () => {
                     <div className="absolute inset-0 bg-black bg-opacity-50" />
                     <div className="absolute top-0 right-0 w-full h-full flex flex-col gap-4 justify-center items-center">
                     <h4 className="md:text-2xl text-background font-[syne] font-bold">{category.name}</h4>
-                    <Button variant="outline" className="bg-transparent text-white clip">SHOP NOW</Button>
+                    <Button variant="outline" className="bg-transparent text-white">SHOP NOW</Button>
                     </div>
                 </div>
             ))}

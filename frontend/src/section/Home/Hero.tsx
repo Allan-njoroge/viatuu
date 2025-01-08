@@ -15,7 +15,7 @@ const Hero = () => {
           <h1 className="font-bold font-[syne] text-3xl md:text-4xl text-background">
             DAYS CAN'T START WITHOUT PERFECT SHOES
           </h1>
-          <Button className="mt-5 text-white px-6 py-3 rounded-none clip transition-all">Explore More</Button>
+          <Button variant="outline" className="mt-5 text-white bg-transparent px-6 py-3 transition-all">Explore More</Button>
         </div>
       </div>
     </div>

@@ -31,7 +31,7 @@ const Products = () => {
         ))}
       </div>
 
-      <Button className="mx-auto text-center mt-10 md:mt-14 clip">
+      <Button className="mx-auto text-center mt-10 md:mt-14">
         <Link to="/shop">Shop More</Link>
       </Button>
     </div>
