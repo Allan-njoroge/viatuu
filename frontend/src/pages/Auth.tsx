@@ -30,10 +30,10 @@ const Auth = () => {
             <h1 className="text-center font-semibold text-xl md:text-2xl">CREATE AN ACCOUNT</h1>
             {registerFields.map((item, index) => (
                 <div key={index}>
-                    {/* <label htmlFor={item.name} className="pl-2">{item.label}</label> */}
+                    <label htmlFor={item.name} className="pl-2">{item.label}</label>
                     <Input
                         type={item.type}
-                        placeholder={item.label}
+                        placeholder={item.placeholder}
                         id={item.name}
                         required
                     />
@@ -48,7 +48,7 @@ const Auth = () => {
             <h1 className="text-center font-semibold text-xl md:text-2xl">LOGIN TO YOUR ACCOUNT</h1>
             {loginFields.map((item, index) => (
                 <div key={index}>
-                    {/* <label htmlFor={item.name} className="pl-2">{item.label}</label> */}
+                    <label htmlFor={item.name} className="pl-2">{item.label}</label>
                     <Input
                         type={item.type}
                         placeholder={item.placeholder}
