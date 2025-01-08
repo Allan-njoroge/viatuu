@@ -8,7 +8,7 @@ const Categories = () => {
         { name: "KIDS", link: "/" }
     ]
   return (
-    <div className="py-10 md:py-14">
+    <div className="py-10 md:py-14 mx-auto">
         <h3 className="font-[syne] font-bold text-center text-2xl">SHOP BY CATEGORY</h3>
         {/* ===== Category Boxex ===== */}
         <div className="flex flex-col sm:flex-row justify-center mt-10 w-1/2 sm:w-3/4 mx-auto gap-5">
