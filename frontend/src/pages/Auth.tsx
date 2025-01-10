@@ -19,7 +19,7 @@ const Auth = () => {
 
   return (
     <div className="w-full min-h-[80vh] flex justify-center items-center px-10">
-      <Tabs defaultValue="register" className="w-full md:w-1/3 border border-muted-foreground/20 p-10 rounded-md">
+      <Tabs defaultValue="register" className="w-full md:w-1/3 border border-muted-foreground/20 px-5 md:px-10 py-10  rounded-md">
         <TabsList className="w-full">
           <TabsTrigger value="register">Register</TabsTrigger>
           <TabsTrigger value="login">Login</TabsTrigger>
