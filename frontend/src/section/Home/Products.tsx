@@ -1,6 +1,7 @@
 import ProductCard from "@/components/ProductCard";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
+import { Skeleton } from "@/components/ui/skeleton";
 
 const Products = () => {
   const productDetails: { name: string; price: number; category: string }[] = [
@@ -13,11 +14,14 @@ const Products = () => {
     { name: "Nike Low Dunk", price: 20, category: "Kids" },
     { name: "Air Force", price: 20, category: "Kids" },
     { name: "Nike Air Max Plus SE", price: 20, category: "Kids" },
+    { name: "Nike Low Dunk", price: 20, category: "Kids" },
+    { name: "Air Force", price: 20, category: "Kids" },
+    { name: "Nike Air Max Plus SE", price: 20, category: "Kids" },
   ];
   return (
     <div className="py-10 md:py-14 px-2 md:px-6 w-full grid">
       <h3 className="font-[syne] font-bold text-center text-2xl">PRODUCTS</h3>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-10 mt-10">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 mt-10">
         {productDetails.map((item, index) => (
           <>
             <ProductCard

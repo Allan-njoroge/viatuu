@@ -10,7 +10,7 @@ const Hero = () => {
         className="w-full h-full object-cover"
       />
       <div className="absolute inset-0 bg-black bg-opacity-50" />
-      <div className="w-full h-full max-w-[1440px] absolute top-0 right-0 flex items-center justify-center">
+      <div className="w-full h-full max-w-[1440px] absolute top-0 right-0 flex items-center justify-center mx-auto text-center">
         <div className="text-center px-5 md:px-10">
           <h1 className="font-bold font-[syne] text-3xl md:text-4xl text-background">
             DAYS CAN'T START WITHOUT PERFECT SHOES

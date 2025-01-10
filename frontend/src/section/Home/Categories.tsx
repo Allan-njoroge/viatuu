@@ -11,7 +11,7 @@ const Categories = () => {
     <div className="py-10 md:py-14 mx-auto">
         <h3 className="font-[syne] font-bold text-center text-2xl">SHOP BY CATEGORY</h3>
         {/* ===== Category Boxex ===== */}
-        <div className="flex flex-col sm:flex-row justify-center mt-10 w-1/2 sm:w-3/4 mx-auto gap-5">
+        <div className="flex flex-col sm:flex-row justify-center mt-10 w-3/4 mx-auto gap-5">
             {categoriesData.map((category, index) => (
                 <div key={index} className="relative flex items-center justify-center">
                     <img src={ Image } alt="Shoe Image" className="w-full h-full object-cover" />
