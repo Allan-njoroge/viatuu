@@ -87,3 +87,17 @@ class SingleProductDetails(APIView):
             return Response({ "message": "Product deleted successfully" }, status=status.HTTP_204_NO_CONTENT)
         
         return Response({ "message": "Failed to delete. Try Again" }, status=status.HTTP_400_BAD_REQUEST)
+    
+
+"""
+Get Products by categories
+"""
+class GetProducts(APIView):
+    def get(self, request, category):
+        products = Products.objects.filter(category=category)
+        
+        if not products.exists():
+            return Response({ "message": "No products found" }, status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = ProductsSerializers(products, many=True)
+        return Response({ "products": serializer.data }, status=status.HTTP_200_OK)

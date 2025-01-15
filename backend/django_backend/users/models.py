@@ -9,7 +9,6 @@ class User(AbstractUser):
     ]
     
     role = models.CharField(max_length=10, choices=ROLES, default='customer')
-    profile_picture = models.ImageField(upload_to='profile_pictures', null=True, blank=True)
     username = None
     
     # Provide a custom related_name to avoid clashes with the default User model fields
