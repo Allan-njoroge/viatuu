@@ -2,9 +2,18 @@ import Image from "@/assets/Shoe.jpg";
 import { Link } from "react-router";
 import { Button } from "./ui/button";
 
-const ProductCard = ({ name, price, link, category }) => {
+
+type Props = {
+  name: string,
+  price: number,
+  link: string,
+  category: string,
+  image: string
+}
+
+const ProductCard = ({ name, price, link, category, image }: Props) => {
   return (
-    <Link to={'/product'}>
+    <Link to={link}>
       <div className="grid h-full border-2 border-muted-foreground/10 hover:border-muted-foreground/30 rounded-lg overflow-hidden w-9/10 p-1 md:p-3 transition-all ease-in-out duration-300">
         <div className="w-full h-full rounded-sm overflow-hidden">
           <img

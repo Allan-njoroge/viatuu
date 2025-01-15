@@ -1,6 +1,5 @@
 import ProductCard from "@/components/ProductCard";
 import { useEffect, useState } from "react";
-import axios from "axios";
 import useFetch from "@/hooks/useFetch";
 import Image from "@/assets/Shoe.jpg"
 import { useLocation } from "react-router";
@@ -19,7 +18,6 @@ type Product = {
 const Products: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([])
   const [url, setUrl] = useState<string>("")
-
   const { data, loading, message } = useFetch(url)
 
   const location = useLocation()
@@ -40,8 +38,6 @@ const Products: React.FC = () => {
     }
   }, [data])
   
-
-  data
 
   if (loading) {
     return <div>Loading products...</div>;

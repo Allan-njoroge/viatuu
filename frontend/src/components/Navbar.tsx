@@ -14,9 +14,9 @@ const Navbar = () => {
   const navLinks: { name: string; link: string }[] = [
     { name: "HOME", link: "/" },
     { name: "SHOP", link: "/shop" },
-    { name: "MEN", link: "/shop/men" },
-    { name: "WOMEN", link: "/shop/women" },
-    { name: "KIDS", link: "/shop/kids" },
+    { name: "MEN", link: "/shop/Men" },
+    { name: "WOMEN", link: "/shop/Women" },
+    { name: "KIDS", link: "/shop/Kids" },
   ];
 
   const userPages = [
