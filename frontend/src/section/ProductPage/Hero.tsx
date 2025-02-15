@@ -4,8 +4,10 @@ import { Input } from "@/components/ui/input";
 import { FiShoppingCart } from "react-icons/fi";
 import useFetch from "@/hooks/useFetch";
 import { useLocation } from "react-router";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { AuthContext } from "@/context/AuthContext";
+import { UserType } from "@/lib/types";
 
 type Product = {
   id: number;
@@ -19,48 +21,50 @@ type Product = {
 };
 
 type ApiResponse = {
-  product: Product
-}
+  product: Product;
+};
 
 const Hero = () => {
   const [quantity, setQuantity] = useState<number>(1);
-  const [error, setError] = useState<string>("")
-  const [product, setProduct] = useState<Product | null>(null)
+  const [error, setError] = useState<string>("");
+  const [product, setProduct] = useState<Product | null>(null);
 
   const location = useLocation();
   const pathname = location.pathname;
   const p_id = pathname.split("/")[2];
   const { data, loading, message } = useFetch<ApiResponse>(
-    `http://localhost:8000/api/products/${p_id}`
+    `${import.meta.env.VITE_SERVER_URL}/products/${p_id}`
   );
-  
-  console.log(data)
-  console.log(product)
+  const { user } = useContext(AuthContext) as { user: UserType | null };
+
+  console.log(data);
+  console.log(product);
 
   useEffect(() => {
-    if(data?.product) {
-        setProduct(data.product)
-        console.log(data.product)
-      }
-  }, [data])
-
+    if (data?.product) {
+      setProduct(data.product);
+    }
+  }, [data]);
 
   // Funtion to add item to cart
   const addCartItems = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
-    try{
-      const response = await axios.post('http://127.0.0.1:8000/api/orders/cart/3', {
-        product_id: p_id,
-        quantity
-      })
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_SERVER_URL}/orders/cart/${user?.id}`,
+        {
+          product_id: p_id,
+          quantity,
+        }
+      );
 
-      alert(response.data.message)
-    } catch(error: any) {
-      if(error) {
-        setError(error.response.data.message)
+      alert(response.data.message);
+    } catch (error: any) {
+      if (error) {
+        setError(error.response.data.message);
       }
     }
-  } 
+  };
 
   if (loading) {
     return <div>Loading...</div>;
@@ -72,12 +76,12 @@ const Hero = () => {
 
   const increment = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setQuantity((prev) => prev+1);
+    setQuantity((prev) => prev + 1);
   };
 
   const decrement = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    setQuantity((prev) => prev-1);
+    setQuantity((prev) => prev - 1);
   };
 
   // Function to handle manual input
@@ -91,30 +95,25 @@ const Hero = () => {
   };
 
   return (
-    <div className="px-5 md:px-10 w-full flex justify-between flex-col md:flex-row gap-5 md">
+    <div className="px-5 md:px-10 w-full flex justify-between flex-col md:flex-row gap-5 md min-h-[80vh]">
       {/* Image section */}
       <div className="flex-1 grid gap-3">
         <img src={Image} alt="Shoe Image" className="rounded-sm" />
-        <div className="grid grid-cols-3 gap-3">
-          <img src={Image} alt="" className="rounded-sm" />
-          <img src={Image} alt="" className="rounded-sm" />
-          <img src={Image} alt="" className="rounded-sm" />
-        </div>
       </div>
       {/* Text Section */}
       <div className="flex-1 p-5">
         {/* Title field */}
         <div>
-          <p className="text-muted-foreground">{product.category}'s Shoes</p>
+          <p className="text-muted-foreground">{product?.category}'s Shoes</p>
           <h3 className="text-2xl md:text-3xl font-bold font-[syne]">
-            {product.name}
+            {product?.name}
           </h3>
         </div>
         {/* Description field */}
         <div className="my-8 grid gap-2">
           <h5 className="font-semibold text-xl">Product Description</h5>
           <p className="text-muted-foreground pl-2 leading-7 text-sm md:text-md">
-            {product.description}
+            {product?.description}
           </p>
         </div>
         {/* Form fields */}
