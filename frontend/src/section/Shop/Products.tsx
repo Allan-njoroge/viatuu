@@ -26,11 +26,11 @@ const Products: React.FC = () => {
 
   useEffect(() => {
     if(pathItems.length>1 && pathItems[2]) {
-      setUrl(`http://localhost:8000/api/products/${pathItems[2]}`)
+      setUrl(`${import.meta.env.VITE_SERVER_URL}/products/${pathItems[2]}`)
     } else {
-      setUrl("http://localhost:8000/api/products/")
+      setUrl(`${import.meta.env.VITE_SERVER_URL}/products/`)
     }
-  }, [pathItems])
+  }, [path])
 
   useEffect(() => {
     if (data && data.products && Array.isArray(data.products)) {
@@ -56,6 +56,8 @@ const Products: React.FC = () => {
       {products.map((item) => (
         <ProductCard
           key={item.id}
+          product_id={item.id}
+          image={item.image_url || Image}
           name={item.name}
           price={item.price}
           category={item.category}

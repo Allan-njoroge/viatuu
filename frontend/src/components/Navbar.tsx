@@ -2,6 +2,9 @@ import { Link } from "react-router";
 import { FiShoppingCart } from "react-icons/fi";
 import { IoPersonOutline } from "react-icons/io5";
 import { IoIosLogOut, IoIosMenu, IoIosClose } from "react-icons/io";
+import { Button } from "@/components/ui/button";
+import { useContext } from "react";
+import { AuthContext } from "@/context/AuthContext";
 
 import {
   Drawer,
@@ -24,6 +27,8 @@ const Navbar = () => {
     { name: "Profile", icon: IoPersonOutline, link: "/profile" },
     { name: "Logout", icon: IoIosLogOut },
   ];
+
+  const { loggedIn } = useContext(AuthContext)
 
   return (
     <nav className="w-full h-[10vh] md:h-[15vh] flex justify-center items-center">
@@ -48,26 +53,32 @@ const Navbar = () => {
           ))}
         </ul>
         {/* === User Utils === */}
-        <div className="hidden md:flex gap-5">
-          {userPages.map((item, index) => (
-            <div key={index} className="flex items-center gap-2">
-              <Link to={item.link || "#"}>
-                {/* <FiShoppingCart className="text-2xl" /> */}
-                <item.icon className="text-2xl" />
-                <span className="md:hidden">{item.name}</span>
-              </Link>
-            </div>
-          ))}
-        </div>
+        {loggedIn ? (
+          <div className="hidden md:flex gap-5">
+            {userPages.map((item, index) => (
+              <div key={index} className="flex items-center gap-2">
+                <Link to={item.link || "#"}>
+                  {/* <FiShoppingCart className="text-2xl" /> */}
+                  <item.icon className="text-2xl" />
+                  <span className="md:hidden">{item.name}</span>
+                </Link>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <Link to="/auth" className="hidden md:flex">
+            <Button>Login</Button>
+          </Link>
+        )}
 
         {/* === Mobile Menu === */}
         <div className="md:hidden flex items-center gap-3">
-          <Link to='/cart'>
-          <div className="flex items-center">
-            <FiShoppingCart className="text-2xl" />
-          </div>
+          <Link to="/cart">
+            <div className="flex items-center">
+              <FiShoppingCart className="text-2xl" />
+            </div>
           </Link>
-          
+
           <Drawer>
             <DrawerTrigger asChild>
               <IoIosMenu className="text-3xl" />
@@ -89,19 +100,27 @@ const Navbar = () => {
                     ))}
                   </ul>
                   {/* === User Utils === */}
-                  <div className="grid gap-5 my-5">
-                    <Link to="/profile">
+                  {loggedIn ? (
+                    <div className="grid gap-5 my-5">
+                      <Link to="/profile">
+                        <div className="flex items-center gap-2 px-4 py-2">
+                          <IoPersonOutline className="text-2xl" />
+                          <span>Profile</span>
+                        </div>
+                      </Link>
+
                       <div className="flex items-center gap-2 px-4 py-2">
-                        <IoPersonOutline className="text-2xl" />
-                        <span>Profile</span>
+                        <IoIosLogOut className="text-2xl" />
+                        <span className="">Logout</span>
                       </div>
-                    </Link>
-                    
-                    <div className="flex items-center gap-2 px-4 py-2">
-                      <IoIosLogOut className="text-2xl" />
-                      <span className="">Logout</span>
                     </div>
-                  </div>
+                  ) : (
+                    <Link to="/auth" className="flex my-5">
+                      <DrawerClose>
+                        <Button>Login</Button>
+                      </DrawerClose>
+                    </Link>
+                  )}
 
                   <div className="absolute top-5 right-5">
                     <DrawerClose asChild>

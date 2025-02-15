@@ -2,16 +2,16 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 
 
-const useFetch = (url: string) => {
+const useFetch = <T>(url: string) => {
     const [loading, setLoading] = useState<boolean>(true)
-    const [data, setData] = useState<string[] | null>(null)
-    const [message, setMessage] = useState<string | null>(null)
+    const [data, setData] = useState<T | null>(null)
+    const [message, setMessage] = useState<string | null>("")
 
 
     useEffect(() => {
         const fetchData = async() => {
             try{
-                const response = await axios.get(url)
+                const response = await axios.get<T>(url)
                 const data = response.data
                 setData(data)
                 setLoading(false)

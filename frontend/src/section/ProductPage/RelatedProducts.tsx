@@ -1,12 +1,16 @@
 import ProductCard from "@/components/ProductCard";
+import useFetch from "@/hooks/useFetch";
+import { ProductType } from "@/lib/types";
 
-const RelatedProducts = () => {
+
+const RelatedProducts = ({category: string}) => {
   const productDetails: { name: string; price: number; category: string }[] = [
     { name: "Nike Low Dunk", price: 20, category: "Men" },
     { name: "Air Force", price: 20, category: "Men" },
     { name: "Nike Air Max Plus SE", price: 20, category: "Men" },
     { name: "Nike Low Dunk", price: 20, category: "Women" },
   ];
+  const {data, loading, message} = useFetch('')
 
   return (
     <div className="relative w-full py-10 md:py-14 px-2 md:px-6 mt-10">

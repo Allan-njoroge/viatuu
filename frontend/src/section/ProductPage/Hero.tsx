@@ -1,17 +1,11 @@
 import Image from "@/assets/Shoe.jpg";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { FiShoppingCart } from "react-icons/fi";
 import useFetch from "@/hooks/useFetch";
 import { useLocation } from "react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 type Product = {
   id: number;
@@ -24,17 +18,49 @@ type Product = {
   stock_quantity: number;
 };
 
+type ApiResponse = {
+  product: Product
+}
+
 const Hero = () => {
   const [quantity, setQuantity] = useState<number>(1);
+  const [error, setError] = useState<string>("")
+  const [product, setProduct] = useState<Product | null>(null)
 
   const location = useLocation();
   const pathname = location.pathname;
   const p_id = pathname.split("/")[2];
-  const { data, loading, message } = useFetch<{ product: Product }>(
+  const { data, loading, message } = useFetch<ApiResponse>(
     `http://localhost:8000/api/products/${p_id}`
   );
+  
+  console.log(data)
+  console.log(product)
 
-  const product = data?.product;
+  useEffect(() => {
+    if(data?.product) {
+        setProduct(data.product)
+        console.log(data.product)
+      }
+  }, [data])
+
+
+  // Funtion to add item to cart
+  const addCartItems = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    try{
+      const response = await axios.post('http://127.0.0.1:8000/api/orders/cart/3', {
+        product_id: p_id,
+        quantity
+      })
+
+      alert(response.data.message)
+    } catch(error: any) {
+      if(error) {
+        setError(error.response.data.message)
+      }
+    }
+  } 
 
   if (loading) {
     return <div>Loading...</div>;
@@ -44,12 +70,12 @@ const Hero = () => {
     return <div>{message}</div>;
   }
 
-  const increment = (e: any) => {
+  const increment = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setQuantity((prev) => prev+1);
   };
 
-  const decrement = (e: any) => {
+  const decrement = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setQuantity((prev) => prev-1);
   };
@@ -123,7 +149,7 @@ const Hero = () => {
             </div>
           </div>
           {/* Add to cart Button */}
-          <Button className="py-5">
+          <Button className="py-5" onClick={addCartItems}>
             <FiShoppingCart />
             Add to Cart
           </Button>

@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router";
 import { Skeleton } from "@/components/ui/skeleton";
 import useFetch from "@/hooks/useFetch";
+import Image from "@/assets/Shoe.jpg";
 
 
 type Product = {
@@ -18,7 +19,7 @@ type Product = {
 
 
 const Products = () => {
-  const { data, loading, message } = useFetch('http://localhost:8000/api/products/')
+  const { data, loading, message } = useFetch(`${import.meta.env.VITE_SERVER_URL}/products/`)
   const products: Product[] = data?.products
 
   if(loading) {
@@ -38,10 +39,12 @@ const Products = () => {
           <>
             <ProductCard
               key={item.id}
+              product_id={item.id}
               name={item.name}
               price={item.price}
               category={item.category}
               link={`product/${item.id}`}
+              image={item.image_url || Image}
             />
           </>
         ))}

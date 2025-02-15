@@ -7,11 +7,11 @@ from products.models import Products
 class Cart(models.Model):
     product_id = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='cart')
     user_id = models.ForeignKey(User, on_delete=models.CASCADE, related_name='cart')
-    price = models.IntegerField()
+    quantity = models.IntegerField(default=1)
     price = models.IntegerField()
     
     def __str__(self):
-        return self.id
+        return str(self.id)
 
 # Orders Model
 class Orders(models.Model):
