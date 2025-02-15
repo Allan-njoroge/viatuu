@@ -1,10 +1,12 @@
 import Image from "@/assets/Shoe.jpg";
 import { Link } from "react-router";
 import { Button } from "./ui/button";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import axios from "axios";
 import { ProductCardProps } from "@/lib/types";
 import { useToast } from "@/hooks/use-toast";
+import { AuthContext } from "@/context/AuthContext";
+import { UserType } from "@/lib/types";
 
 
 const ProductCard = ({
@@ -17,25 +19,26 @@ const ProductCard = ({
 }: ProductCardProps) => {
   const {toast} = useToast();
 
+  const {user} = useContext(AuthContext) as { user: UserType | null };
 
-  const addToCart = async(product_id: number, user_id: number, quantity: number) => {
+  const addToCart = async(product_id: number, quantity: number) => {
     try {
       const response = await axios.post(
-        `${import.meta.env.VITE_SERVER_URL}/orders/cart/${user_id}`, {
+        `${import.meta.env.VITE_SERVER_URL}/orders/cart/${user?.id}`, {
           product_id: product_id,
           quantity: quantity,
         }
       );
       toast({
         title: `${name}`,
-        description: "Successfully added to cart",
+        description: response.data.message,
       })
       // console.log(response.data)
       console.log(response.data.message)
     } catch (err: any) {
       toast({
         title: `${name}`,
-        description: "Failed to add to cart",
+        description: err.response.data.message,
       })
     }
   }
@@ -61,7 +64,7 @@ const ProductCard = ({
           </Link>
           <div className="flex flex-col lg:flex-row lg:items-center mt-4 justify-between gap-3 lg:gap-0">
             <p className="md:text-xl text-left font-[syne]">Kes {price}</p>
-            <Button onClick={() => addToCart(product_id, 2, 4)}>Add to Cart</Button>
+            <Button onClick={() => addToCart(product_id, 1)}>Add to Cart</Button>
           </div>
         </div>
       </div>

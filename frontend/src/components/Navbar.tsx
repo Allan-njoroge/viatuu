@@ -28,7 +28,7 @@ const Navbar = () => {
     { name: "Logout", icon: IoIosLogOut },
   ];
 
-  const { loggedIn } = useContext(AuthContext)
+  const { user } = useContext(AuthContext)
 
   return (
     <nav className="w-full h-[10vh] md:h-[15vh] flex justify-center items-center">
@@ -53,7 +53,7 @@ const Navbar = () => {
           ))}
         </ul>
         {/* === User Utils === */}
-        {loggedIn ? (
+        {user ? (
           <div className="hidden md:flex gap-5">
             {userPages.map((item, index) => (
               <div key={index} className="flex items-center gap-2">
@@ -100,7 +100,7 @@ const Navbar = () => {
                     ))}
                   </ul>
                   {/* === User Utils === */}
-                  {loggedIn ? (
+                  {user ? (
                     <div className="grid gap-5 my-5">
                       <Link to="/profile">
                         <div className="flex items-center gap-2 px-4 py-2">

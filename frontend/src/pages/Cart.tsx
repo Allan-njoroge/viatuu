@@ -5,10 +5,13 @@ import { Link } from "react-router";
 import { FaEdit } from "react-icons/fa";
 import { MdDeleteOutline } from "react-icons/md";
 import useFetch from "@/hooks/useFetch";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { CartProductItems } from "@/lib/types";
 import axios from "axios";
 import { useToast } from "@/hooks/use-toast";
+import { AuthContext } from "@/context/AuthContext";
+import { UserType } from "@/lib/types";
+
 
 type ApiResponse = {
   cart_items: CartProductItems[];
@@ -16,11 +19,13 @@ type ApiResponse = {
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState<CartProductItems[]>([]);
-  const { data, loading, message } = useFetch<ApiResponse>(
-    `${import.meta.env.VITE_SERVER_URL}/orders/cart/2`
-  );
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const { toast } = useToast();
+  const {user} = useContext(AuthContext) as { user: UserType | null };
+  const { data, loading, message } = useFetch<ApiResponse>(
+    `${import.meta.env.VITE_SERVER_URL}/orders/cart/${user?.id}`
+  );
+
 
   useEffect(() => {
     if (data && typeof data === "object" && "cart_items" in data) {
@@ -38,13 +43,12 @@ const Cart = () => {
 
   // function to removed an item from the cart
   const removeCartItem = async (
-    user_id: number,
     product_id: number,
     name: string
   ) => {
     try {
       await axios.delete(
-        `http://localhost:8000/api/orders/cart/${user_id}`,
+        `http://localhost:8000/api/orders/cart/${user?.id}`,
         {
           data: { product_id: product_id },
         }
@@ -54,10 +58,10 @@ const Cart = () => {
         description: "Successfully removed from cart",
       });
     } catch (error: any) {
-      if (error) {
+      if (error.response) {
         return toast({
           title: "Error",
-          description: "Failed to remove item from cart",
+          description: error.response.data.message,
         });
       }
     }
@@ -80,7 +84,7 @@ const Cart = () => {
   // Display this for a cart that has items inside
   const OccupiedCart = () => (
     <div className="md:w-3/4">
-      <h3 className="font-bold text-xl font-[syne]">User's Cart</h3>
+      <h3 className="font-bold text-xl font-[syne]">{user &&  `${user?.first_name}'s cart`}</h3>
       {/* Cart Items */}
       <div className="grid gap-5 py-10">
         {cartItems.map((item) => (
@@ -114,7 +118,7 @@ const Cart = () => {
                 </Button>
                 {/* Remove Item From Cart Button */}
                 <Button
-                  onClick={() => removeCartItem(2, item.product_id, item.name)}
+                  onClick={() => removeCartItem( item.product_id, item.name)}
                   className="bg-red-500"
                 >
                   <MdDeleteOutline />
