@@ -1,12 +1,12 @@
 import Image from "@/assets/Shoe.jpg";
 import { Link } from "react-router";
 import { Button } from "./ui/button";
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import axios from "axios";
 import { ProductCardProps } from "@/lib/types";
 import { useToast } from "@/hooks/use-toast";
-import { AuthContext } from "@/context/AuthContext";
-import { UserType } from "@/lib/types";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 
 const ProductCard = ({
@@ -19,7 +19,7 @@ const ProductCard = ({
 }: ProductCardProps) => {
   const {toast} = useToast();
 
-  const {user} = useContext(AuthContext) as { user: UserType | null };
+  const {user} = useSelector((state: RootState) => state.user)
 
   const addToCart = async(product_id: number, quantity: number) => {
     try {
