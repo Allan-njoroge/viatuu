@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import AuthForm, { InputProps } from "./AuthForm";
-import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch, RootState } from "@/redux/store";
+import { useDispatch } from "react-redux";
+import { AppDispatch } from "@/redux/store";
 import { loginUser } from "@/redux/thunks/userThunks";
 
 const LoginForm = () => {
@@ -10,7 +10,6 @@ const LoginForm = () => {
     password: "",
   });
   const dispatch = useDispatch<AppDispatch>();
-  const { loading } = useSelector((state: RootState) => state.user);
 
   const inputs: InputProps[] = [
     { label: "Email Address", name: "email", type: "email", placeholder: "Johndoe@gmail.com" },
@@ -27,10 +26,6 @@ const LoginForm = () => {
     e.preventDefault();
     dispatch(loginUser(formData)).unwrap()
   };
-
-  if (loading) {
-  return <h1 className="p-3">Loading...</h1>;
-  }
 
   return (
     <>

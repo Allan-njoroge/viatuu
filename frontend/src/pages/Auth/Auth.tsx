@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import { useEffect } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { MdErrorOutline, MdOutlineCheckCircle } from "react-icons/md";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 const Auth = () => {
   const { isAuthenticated, error, message } = useSelector(

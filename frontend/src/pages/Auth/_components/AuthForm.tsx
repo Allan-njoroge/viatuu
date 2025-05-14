@@ -1,6 +1,9 @@
+import LoadingSpinner from "@/components/LoadingSpinner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { RootState } from "@/redux/store";
 import { ChangeEvent, FormEvent } from "react";
+import { useSelector } from "react-redux";
 
 export interface InputProps {
   label: string;
@@ -24,6 +27,8 @@ const AuthForm = ({
   onChange,
   btnText,
 }: Props) => {
+  const {loading} = useSelector((state: RootState) => state.user)
+  
   return (
     <form action="" className="grid gap-5 mt-5" onSubmit={onSubmit}>
       <h1 className="text-center font-semibold text-xl md:text-2xl">
@@ -44,7 +49,9 @@ const AuthForm = ({
           />
         </div>
       ))}
-      <Button>{btnText}</Button>
+      <Button disabled={loading} className="flex items-center justify-center gap-2">
+        {loading ? <LoadingSpinner size="sm" /> : btnText }
+      </Button>
     </form>
   );
 };
